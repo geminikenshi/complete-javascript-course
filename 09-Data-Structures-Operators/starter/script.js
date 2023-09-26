@@ -27,3 +27,71 @@ const restaurant = {
     },
   },
 };
+
+const { menu = [], starterMenu: starters = [] } = restaurant;
+
+// challenge 01
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// destructure the players field
+const [players1, players2] = game.players;
+const [gk, ...fieldPlayers] = players1;
+const allplayers = [...players1, ...players2];
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+
+// destructure object
+const {
+  odds: { team1, x: draw, team2 },
+} = game;
+
+function printGoals(...names) {
+  names.forEach(function (element) {
+    console.log(element);
+  });
+  console.log('number of goals that were scored: ' + names.length);
+}
+
+// use logical operator
+
+// if use ||, short circuit will happen
+team1 < team2 && console.log('Team1 is more likely to win');
+team1 > team2 && console.log('Team2 is more likely to win');
