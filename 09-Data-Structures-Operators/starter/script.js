@@ -30,7 +30,12 @@ const restaurant = {
 
 const { menu = [], starterMenu: starters = [] } = restaurant;
 
-// challenge 01
+for (const item of menu) console.log(item);
+
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
@@ -71,27 +76,120 @@ const game = {
     team2: 6.5,
   },
 };
+// challenge #1
 
-// destructure the players field
-const [players1, players2] = game.players;
-const [gk, ...fieldPlayers] = players1;
-const allplayers = [...players1, ...players2];
-const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+// // destructure the players field
+// const [players1, players2] = game.players;
+// const [gk, ...fieldPlayers] = players1;
+// const allplayers = [...players1, ...players2];
+// const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
 
-// destructure object
-const {
-  odds: { team1, x: draw, team2 },
-} = game;
+// // destructure object
+// const {
+//   odds: { team1, x: draw, team2 },
+// } = game;
 
-function printGoals(...names) {
-  names.forEach(function (element) {
-    console.log(element);
+// function printGoals(...names) {
+//   names.forEach(function (element) {
+//     console.log(element);
+//   });
+//   console.log('number of goals that were scored: ' + names.length);
+// }
+
+// // use logical operator
+
+// // if use ||, short circuit will happen
+// team1 < team2 && console.log('Team1 is more likely to win');
+// team1 > team2 && console.log('Team2 is more likely to win');
+
+// Challenge #2
+// // 1.
+// game.scored.forEach((element, index) => {
+//   console.log(`Goal ${index + 1}:${element}`);
+// });
+
+// // 2.
+// const oddsValue = Object.values(game.odds);
+// let oddsTotal = 0;
+// for (let odd of oddsValue) {
+//   oddsTotal += odd;
+// }
+// console.log(oddsTotal / oddsValue.length);
+
+// // 3.
+// const oddsKeyValue = Object.entries(game.odds);
+// for (const [key, value] of oddsKeyValue) {
+//   if (key == 'x') {
+//     console.log(`Odd of draw: ${value}`);
+//   } else {
+//     console.log(`Odd of victory ${game[key]}: ${value}`);
+//   }
+// }
+
+// Challenge #3
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+// // 1.
+// const events = new Set(gameEvents.values());
+// console.log(events);
+
+// // 2.
+// gameEvents.delete(64);
+// console.log(gameEvents);
+
+// // 3.
+// console.log(
+//   `An event happened, on average, every ${90 / gameEvents.size} minutes`
+// );
+
+// // 4.
+// const eventList = gameEvents.entries();
+
+// for (const [key, value] of eventList) {
+//   const half = key < 45 ? '[FIRST HALF]' : '[SECOND HALF]';
+//   console.log(`${half} ${key}: ${value}`);
+// }
+
+// Challenge #4
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+const textArea = document.querySelector('textarea');
+const btn = document.querySelector('button');
+btn.addEventListener('click', function () {
+  // Get the text from element first
+  const text = textArea.value;
+
+  // Seperate each line
+  const lines = text.toLowerCase().split('\n');
+  console.log(lines);
+  // split string by '_'
+  lines.forEach((line, index) => {
+    // remove all spaces using regex
+    const words = line.replace(/\s+/g, '').split('_');
+    const camelCase = [];
+    words.forEach((word, index) => {
+      if (index === 0) {
+        // the first word stay the same it is
+        camelCase.push(word);
+        return;
+      }
+      camelCase.push(word[0].toUpperCase() + word.slice(1));
+    });
+
+    // use padding to create fixed length string
+    console.log(camelCase.join('').padEnd(20, ' ') + '😗'.repeat(index + 1));
   });
-  console.log('number of goals that were scored: ' + names.length);
-}
-
-// use logical operator
-
-// if use ||, short circuit will happen
-team1 < team2 && console.log('Team1 is more likely to win');
-team1 > team2 && console.log('Team2 is more likely to win');
+});
