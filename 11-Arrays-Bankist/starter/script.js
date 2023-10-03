@@ -82,6 +82,34 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+const createAccounts = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name.at(0))
+      .join('');
+  });
+};
+createAccounts(accounts);
+
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, current) => acc + current, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {};
+
+calcDisplaySummary(account1.movements);
+
+// const account1 = {
+//   owner: 'Jonas Schmedtmann',
+//   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+//   interestRate: 1.2, // %
+//   pin: 1111,
+// };
+
 // Create username
 
 /////////////////////////////////////////////////
@@ -94,7 +122,31 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// const eurToUsd = 1.1;
+// const movementsUSD = movements.map(mov => mov * eurToUsd);
+
+// // console.log(movements);
+// // console.log(movementsUSD);
+
+// const movementsDescriptions = movements.map(
+//   (mov, i) =>
+//     `Movement ${i + 1}: You ${mov > 0 ? 'deposit' : 'withdraw'} ${Math.abs(
+//       mov
+//     )}`
+// );
+
+// console.log(movementsDescriptions);
+
+// const deposits = movements.filter(mov => mov > 0);
+
+// console.log(movements);
+// console.log(deposits);
+
+// const withdrawals = movements.filter(mov => mov < 0);
+
+// console.log(withdrawals);
 
 /////////////////////////////////////////////////
 
@@ -113,18 +165,3 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 // checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
-
-const eurToUsd = 1.1;
-const movementsUSD = movements.map(mov => mov * eurToUsd);
-
-// console.log(movements);
-// console.log(movementsUSD);
-
-const movementsDescriptions = movements.map(
-  (mov, i) =>
-    `Movement ${i + 1}: You ${mov > 0 ? 'deposit' : 'withdraw'} ${Math.abs(
-      mov
-    )}`
-);
-
-console.log(movementsDescriptions);
