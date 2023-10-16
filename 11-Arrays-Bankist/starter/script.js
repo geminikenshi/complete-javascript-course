@@ -73,7 +73,7 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__value">${mov}€</div>
       </div>
     `;
 
@@ -82,7 +82,7 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
-const createAccounts = function (accs) {
+const createUsernames = function (accs) {
   accs.forEach(acc => {
     acc.username = acc.owner
       .toLowerCase()
@@ -91,15 +91,39 @@ const createAccounts = function (accs) {
       .join('');
   });
 };
-createAccounts(accounts);
+createUsernames(accounts);
+
+// Login button even handler
+btnLogin.addEventListener('click', function (event) {
+  // Prevent form from submitting
+  event.preventDefault();
+  console.log('login');
+});
 
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, current) => acc + current, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance} €`;
 };
 calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {};
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(value => value > 0)
+    .reduce((prev, curr) => prev + curr);
+  const costs = movements
+    .filter(value => value < 0)
+    .reduce((prev, curr) => prev + curr);
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => deposit * 0.012)
+    .filter(int => int >= 1)
+    .reduce((prev, curr) => prev + curr);
+
+  labelSumIn.textContent = `${incomes}€`;
+  labelSumOut.textContent = `${Math.abs(costs)}€`;
+  labelSumInterest.textContent = `${interest}€`;
+};
 
 calcDisplaySummary(account1.movements);
 
@@ -122,7 +146,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // const eurToUsd = 1.1;
 // const movementsUSD = movements.map(mov => mov * eurToUsd);
@@ -165,3 +189,23 @@ const currencies = new Map([
 
 // checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 // checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+
+// return < 0. A, B (keep order)
+// return > 0. B, A (switch order)
+movements.sort((a, b) => a - b);
+
+console.log(movements);
+
+const x = new Array(7);
+console.log(x);
+x.fill('value', 3, 6);
+console.log(x);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+const movementsUI = Array.from(
+  document.querySelectorAll('.movements__value'),
+  el => Number(el.textContent.replace('€', ''))
+);
+
+console.log(movementsUI);
