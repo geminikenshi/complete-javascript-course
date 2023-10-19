@@ -74,7 +74,7 @@ const getCountryData = function (country) {
     .then(data => renderCountry(data, 'neighbour'));
 };
 
-getCountryData('cyprus');
+// getCountryData('cyprus');
 
 // console.log('Test start');
 // setTimeout(() => console.log('0 sec timer'), 0);
@@ -104,6 +104,50 @@ const getPosition = function () {
 
 getPosition().then(pos => console.log(pos));
 
-const whereAmI = function (lat, lng) {
-  fetch(`https://geocode.xyz`);
+// implement with chaining and consuming promise
+// const whereAmI = function () {
+//   getPosition()
+//     .then(pos => {
+//       //   lat = pos.coords.latitude;
+//       //   lng = pos.coords.longitude;
+//       const { latitude: lat, longitude: lng } = pos.coords; // destructure object
+//       return fetch(`https://geocode.xyz/${lat},${lng}?json=1`);
+//     })
+//     .then(res => {
+//       if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
+//       return res.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       console.log(`You are in ${data.city}, ${data.country}`);
+
+//       return fetch(`${apiRoot}/name/${data.country}`);
+//     })
+//     .then(res => {
+//       if (!res.ok) throw new Error(`Country not found (${res.status})`);
+//       return res.json();
+//     })
+//     .then(data => renderCountry(data[0]));
+// };
+
+const whereAmI = async function () {
+  try {
+    // Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
+
+    // Reverse geocoding
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?json=1`);
+    const dataGeo = await resGeo.json();
+
+    // Country data
+    const res = await fetch(`${apiRoot}/name/${dataGeo.country}`);
+    const data = await res.json();
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(err);
+  }
 };
+
+// whereAmI(25.0672353, 121.4495892);
+btn.addEventListener('click', whereAmI);
