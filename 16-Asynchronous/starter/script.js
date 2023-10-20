@@ -138,16 +138,41 @@ const whereAmI = async function () {
 
     // Reverse geocoding
     const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?json=1`);
+    if (!resGeo.ok) throw new Error('Error getting location data');
     const dataGeo = await resGeo.json();
 
     // Country data
     const res = await fetch(`${apiRoot}/name/${dataGeo.country}`);
+    if (!res.ok) throw new Error('Error getting country data');
     const data = await res.json();
     renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
     console.error(err);
+
+    // Reject promise, return error from async function
+    throw err;
   }
 };
 
 // whereAmI(25.0672353, 121.4495892);
 btn.addEventListener('click', whereAmI);
+
+console.log('1: Will get location');
+// whereAmI()
+//   .then(city => console.log(`2: ${city}`))
+//   .catch(err => console.error(`2: ${err}`))
+//   .finally(() => console.log('3: Finished getting location'));
+
+// implement with async/await
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(`2: ${city}`);
+  } catch (err) {
+    console.error(`2: ${err}`);
+  }
+
+  console.log('3: Finished getting location');
+})();
