@@ -1,0 +1,24 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Receipe finder",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "    "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "core-js": "^3.33.3",
+    "parcel": "^2.10.3",
+    "regenerator-runtime": "^0.14.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.10.3"
+  }
+}
