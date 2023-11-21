@@ -15,10 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "core-js": "^3.33.3",
-    "parcel": "^2.10.3",
     "regenerator-runtime": "^0.14.0"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.10.3"
+    "@parcel/transformer-sass": "^2.10.3",
+    "parcel": "^2.10.3"
   }
 }
